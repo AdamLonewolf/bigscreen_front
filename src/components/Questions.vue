@@ -14,6 +14,9 @@ export default {
              token: sessionStorage.getItem('user_token'), //objet qui va stocker le token de l'utilisateur
         }
     },
+    props: {
+        display: Boolean,
+    },
     methods:{
 
         //Fonction qui va servir à retourner la liste des questions
@@ -37,7 +40,7 @@ export default {
         if (this.index >= 0 && this.index < this.questions.length) {
             return this.questions[this.index];
         } else {
-            // Sinon, toutes les questions ont été traitées
+            // Si toutes les questions ont été affichées, je fais apparaître le modal de finalisation du sondage
             return this.showLinkModal = true
         }
         },
@@ -76,7 +79,7 @@ export default {
       } else if (currentQuestion.type === "C") {
         response.user_response = this.type_c;
         response.email = this.userEmail;
-        this.type_c = "";
+        this.type_c = "";   
       }
     }
 
@@ -107,9 +110,7 @@ export default {
 
             if(res.status == 'Done'){
                 console.log(res)
-            } else {
-                alert(res.message)
-            }
+            } 
         },
 
     //Fonction pour passer à la question suivante
@@ -132,7 +133,7 @@ export default {
 <template>
 
 <div class="questions-container fixed inset-0 flex items-center justify-center rounded-[12px]">
-    <div class="survey-questions bg-white w-[1200px] h-[620px] relative rounded-[12px] p-4">
+    <div v-if="display && !showLinkModal" class=" animate__animated animate__fadeInUp survey-questions bg-white w-[1200px] h-[620px] relative rounded-[12px] p-4">
         <!-- Barre de progression -->
         <div class="w-full h-4 mb-4 bg-gray-500 rounded-full">
             <div class="h-4 bg-purple rounded-full" :style="{ width: progress + '%' }"></div>
@@ -187,13 +188,13 @@ export default {
 </div>
 
 <!--Modal pour rediriger sur la page des réponses-->
-  <div v-if="showLinkModal" class="modal-container fixed inset-0 flex items-center justify-center" >
+  <div v-if="showLinkModal" class="modal-container z-0 fixed inset-0 flex items-center justify-center" >
     <!-- Overlay sombre -->
       <div class="fixed inset-0 bg-black opacity-60 w-full h-full"></div>
-        <div class="my-modal w-[600px] h-[320px]  z-[10000] animate__animated animate__fadeInUp bg-white rounded-[8px] p-5 flex flex-col">
+        <div class="my-modal w-[600px] h-[320px] z-[10000] animate__animated animate__fadeInUp bg-white rounded-[8px] p-5 flex flex-col">
             <h2 class="text-[22px] font-semibold  text-center text-purple">Merci d'avoir participé à ce sondage !</h2>
-            <p class="text-center font-semibold text-[18px] my-5">Toute l'équipe de Bigscreen vous remercie pour votre engagement. Grâce à votre investissement, nous vous préparons une application toujours plus facile à utiliser, seul ou en famille. Si vous désirez consulter vos réponses ultérieurement, vous pouvez consultez cette adresse:</p> 
-            <router-link :to="`/`"><p class="text-center text-[16px] text-black font-medium hover:text-purple transition ease-in duration-200 break-words">http://localhost:5173/{{token}}</p></router-link> 
+            <p class="text-center font-semibold text-[18px] mt-12">Toute l'équipe de Bigscreen vous remercie pour votre engagement. Grâce à votre investissement, nous vous préparons une application toujours plus facile à utiliser, seul ou en famille. Si vous désirez consulter vos réponses ultérieurement, vous pouvez consultez cette adresse: <router-link :to="`/reponses/${token}`"><a href="" class="text-[18px] text-purple underline font-medium  transition ease-in duration-200 break-words">vos réponses</a></router-link> </p> 
+            
         </div>
   </div>
    
@@ -201,7 +202,7 @@ export default {
 </template>
 
 <style>
-    body {
+body {
   padding: 0;
   margin: 0;
   box-sizing: border-box;

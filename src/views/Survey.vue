@@ -1,12 +1,15 @@
 <script>
+import Question from '../components/Questions.vue';
+
+
 export default {
   data() {
         return{
             showModal:false,
-
+            showQuestion:false
         }
   },
-
+   
   methods:{
     //Permet d'afficher ma fenêtre modale
      displayModal(){
@@ -29,16 +32,23 @@ export default {
                sessionStorage.setItem('user_token',res.token); //je stocke le token de l'utilisateur dans la session du navigateur
     
               const modalContainer = document.querySelector(".modal-container");//je me connecte au container du modal via le DOM
-              modalContainer.classList.add("animate__animated", "animate__fadeOut"); //j'ajoute les classes de animate css pour créer un fade out
+              modalContainer.classList.add("animate__animated", "animate__fadeOutDown"); //j'ajoute les classes de animate css pour créer un fade out
 
               // Une fois que l'animation est terminée,je définis showModal sur false.
               setTimeout(() => {
                 this.showModal = false;
+                setTimeout(()=>{
+                  this.showQuestion = true
+                },500)
               }, 900); 
+
+              
           }
      }
   },
-
+  components:{
+    Question, //j'importe le composant question
+  },
   computed:{
 
   },
@@ -50,23 +60,37 @@ export default {
 </script>
 
 <template>
+
+<!--loader de la page-->
+ <transition name="fade">
+  <div v-if="!showModal" class="loader">
+    <div class="spinner"></div>
+    <div class="loader-text">Chargement en cours...</div>
+  </div>
+</transition>
+
   <!--Navbar-->
-  <div class="navbar bg-transparent">
-    <a href="/">
+  <div class="navbar bg-transparent ">
+    <a href="/" class="z-50">
       <img
-        src="src/assets/images/bigscreen_logo.png"
+        src="public/assets/images/bigscreen_logo.png"
         class="w-[160px] h-auto ml-4"
         alt="logo bigscreen"
       />
     </a>
   </div>
+  <!--Le composant Question-->
+
+<Question :display="showQuestion"></Question>
+
+
   <!--Modal de bienvenue-->
-  <div v-if="showModal" class="modal-container fixed inset-0 flex items-center justify-center animate__animated animate__fadeIn" >
+  <div v-if="showModal" class="modal-container  z-10 fixed inset-0 flex items-center justify-center animate__animated animate__fadeInUp" >
         <div class="my-modal w-[400px] h-[200px] bg-white rounded-[8px] p-3 flex flex-col justify-between">
-        <h2 class="text-[22px] font-semibold  text-center text-purple">Bienvenue sur notre sondage !</h2>
-        <p class="text-center text-[18px]">Pour commencer, veuillez cliquer sur le bouton ci-dessous</p>
-        <button @click="generateToken" class="btn bg-black hover:bg-purple text-white transition ease-in duration-100">Commencer le sondage</button>    
-  </div>
+          <h2 class="text-[22px] font-semibold  text-center text-purple">Bienvenue sur notre sondage !</h2>
+          <p class="text-center text-[18px]">Pour commencer, veuillez cliquer sur le bouton ci-dessous</p>
+          <button @click="generateToken" class="btn bg-black hover:bg-purple text-white transition ease-in duration-100">Commencer le sondage</button>    
+        </div>
   </div>
   
 </template>
@@ -81,4 +105,5 @@ body {
         background-position: center center; */
   background-color: #000000;
 }
+
 </style>
