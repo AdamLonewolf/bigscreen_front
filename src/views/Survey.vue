@@ -6,7 +6,8 @@ export default {
   data() {
         return{
             showModal:false,
-            showQuestion:false
+            showQuestion:false,
+            hideLoader: false,
         }
   },
    
@@ -17,6 +18,14 @@ export default {
             this.showModal = true
         }, 500);
      },
+
+      //loader
+
+         loader(){
+            setTimeout(() => {
+                this.hideLoader = !this.hideLoader //hide loader sera sur true après 1 sec
+            },1000)
+        },
 
      //Fonction permettant de générer le token du sondé
 
@@ -37,9 +46,9 @@ export default {
               // Une fois que l'animation est terminée,je définis showModal sur false.
               setTimeout(() => {
                 this.showModal = false;
-                setTimeout(()=>{
-                  this.showQuestion = true
-                },500)
+                  setTimeout(()=>{
+                    this.showQuestion = true
+                  },500)
               }, 900); 
 
               
@@ -55,6 +64,7 @@ export default {
 
    mounted: function () {
     this.displayModal();
+    this.loader();
   },
 };
 </script>
@@ -63,7 +73,7 @@ export default {
 
 <!--loader de la page-->
  <transition name="fade">
-  <div v-if="!showModal" class="loader">
+  <div v-if="!hideLoader" class="loader">
     <div class="spinner"></div>
     <div class="loader-text">Chargement en cours...</div>
   </div>
@@ -100,9 +110,6 @@ body {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  /* background-image: url('src/assets/images/papyrus-dark.png');
-        background-size:40%;
-        background-position: center center; */
   background-color: #000000;
 }
 

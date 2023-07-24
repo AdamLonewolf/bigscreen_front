@@ -181,7 +181,7 @@ export default {
            var labels = ['Qualité de l\'image', 'Confort d\'utilisation' , 'Connexion réseau', 'Qualité des graphismes 3D', 'Qualité Audio' ];
            var data = [];
            var colors = [
-            'rgb(255, 205, 86)',
+            'rgba(255, 99, 132, 0.2)',
             ]
           var type = 'radar'
 

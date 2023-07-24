@@ -10,6 +10,7 @@
   "dependencies": {
     "animate.css": "^4.1.1",
     "chart.js": "^4.3.0",
+    "flowbite": "^1.7.0",
     "swiper": "^10.0.4",
     "vue": "^3.3.4",
     "vue-awesome-paginate": "^1.1.46",

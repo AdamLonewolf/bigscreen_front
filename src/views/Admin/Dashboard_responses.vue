@@ -1,5 +1,6 @@
 <script>
 import Sidebar from '../../components/Sidebar.vue';
+import { initFlowbite } from 'flowbite'
 export default {
     data(){
         return{
@@ -60,6 +61,7 @@ export default {
     mounted(){
         this.getUserResponses();
         this.loader();
+        initFlowbite();// sert à initialiser les composants de flowbite
     }
 
 }
@@ -79,6 +81,7 @@ export default {
     <Sidebar></Sidebar>
 
      <div class="p-4 sm:ml-64">
+        
         <!--Header de la page-->
          <div class="page-title p-5">      
             <h1 class="mb-4 mt-4 text-5xl font-bold text-black"><span class="text-transparent bg-clip-text bg-gradient-to-r to-purple from-[#8E2DE2]">Réponses</span> des utilisateurs</h1>

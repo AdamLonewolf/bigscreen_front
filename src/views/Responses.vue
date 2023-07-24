@@ -1,6 +1,6 @@
 <script>
 import { Swiper, SwiperSlide } from 'swiper/vue';
-import {Keyboard, Navigation } from 'swiper/modules';
+import { Keyboard, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
@@ -79,7 +79,7 @@ export default {
             :modules="modules"
             class="mySwipe h-[350px]"
         >
-            <swiper-slide v-for="answer in responses" :key="answer.if">
+            <swiper-slide v-for="answer in responses" :key="answer.id">
                 <div class="w-[400px] h-[250px] m-auto p-4 bg-white border rounded-lg ">
                     <div class="answer-container flex flex-col justify-center items-center">
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-purple text-center">Question {{answer.question_id}}</h5>

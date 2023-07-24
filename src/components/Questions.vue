@@ -11,13 +11,20 @@ export default {
              userEmail: '', //vmodel de l'input type email
              responses: [],
              showLinkModal:false, //Modal qui va afficher le lien de redirection à la fin du sondage.
+             emailError:false, //Montre le message d'erreur au niveau de l'input email
+             inputTextError:false, //Montre le message d'erreur au niveau des inputs de type B
+             inputNumberError2:false,
+             inputNumberError:false, //Montre le message d'erreur au niveau des inputs de type c 
              token: sessionStorage.getItem('user_token'), //objet qui va stocker le token de l'utilisateur
+    
         }
     },
     props: {
         display: Boolean,
     },
     methods:{
+
+
 
         //Fonction qui va servir à retourner la liste des questions
         async getQuestions(){
@@ -35,8 +42,11 @@ export default {
         },
 
     // Fonction pour obtenir la question actuelle en fonction de l'index
+
         getCurrentQuestion() {
-            //Si l'index est supérieur à 0 et inférieur à la taille du tableau, alors il retourne la question actuelle
+
+       //Si l'index est supérieur à 0 et inférieur à la taille du tableau, alors il retourne la question actuelle
+
         if (this.index >= 0 && this.index < this.questions.length) {
             return this.questions[this.index];
         } else {
@@ -51,6 +61,102 @@ export default {
       this.selectedOption = option; //selected option va récupérer le libellé de la proposition selectionnée
       this.saveResponses(); //j'appelle nextQuestion
     },
+
+
+    //Validation de l'email.
+
+    emailValidation(){
+
+    
+    //Si l'utilisateur laisse le champ vide ou ne mets pas d'arobase et qu'il clique sur le bouton suivant, alors une erreur sera retournée
+
+       if (this.getCurrentQuestion().id === 1) {
+        if (!this.userEmail.trim() || !this.userEmail.includes('@')) {
+          this.emailError = true;
+          setTimeout(() => {
+            this.emailError = false;
+          }, 2000);
+          return;
+        } else {
+            this.saveResponses()
+        }
+      } 
+     
+    },
+
+
+    //Vérification des inputs de type B
+    
+    inputTextVerification(){
+
+        //Si le champ est vide, on ne passe pas à la question suivante.
+        if(this.getCurrentQuestion().type === "B"){
+            if(!this.type_b.trim()){
+                this.inputTextError = true;
+                setTimeout(() => {
+                    this.inputTextError = false;
+                }, 2000);
+            } else {
+                this.saveResponses();
+            }
+        }
+    },
+
+    //Vérification des inputs de type C
+
+   inputNumberVerification() {
+        var questionId = this.getCurrentQuestion().id;
+
+        if (this.getCurrentQuestion().type === "C" && questionId >= 11 && questionId <= 15) {
+            var number = parseInt(this.type_c);
+            // Si le vmodel (transformé en entier) est inférieur à 1 ou supérieur à 5, ou n'est pas un nombre ou encore est vide, alors on ne passe pas à la question suivante.
+            if (isNaN(number) || number < 1 || number > 5 || this.type_c === "") {
+                this.inputNumberError = true;
+                setTimeout(() => {
+                    this.inputNumberError = false;
+                }, 2000);
+            } else {
+                this.saveResponses();
+            } 
+        } else {
+             if (this.type_c === "") {
+                this.inputNumberError2 = true;
+                setTimeout(() => {
+                    this.inputNumberError2 = false;
+                }, 2000);
+            } else {
+                this.saveResponses();
+            }
+        }
+  },
+
+
+    //Fonction qui va permettre de revenir à la question précédente
+
+    previousQuestion(){
+
+        //Je décrémente l'index
+        this.index--
+
+    },
+
+    // Fonction va mettre à jour ou ajouter une réponse en fonction de l'index de la question
+        updateOrSaveResponse(response) {
+
+        //On parcourt la table responses pour voir s'il y'a pas une reponse existante pour une question        
+        const existingResponseIndex = this.responses.findIndex(
+            (r) => r.question_id === response.question_id
+        );
+
+        if (existingResponseIndex !== -1) {
+            // Si une réponse existe déjà pour cette question, on la met à jour
+            this.responses[existingResponseIndex] = response;
+        } else {
+            // Sinon, on ajoute la nouvelle réponse au tableau
+            this.responses.push(response);
+        }
+        },
+
 
     //Je crée une méthode qui va sauvegarder les réponses de l'utilisateur jusqu'à la fin du sondage
        saveResponses() {
@@ -83,8 +189,7 @@ export default {
       }
     }
 
-        // Je push l'objet response dans le tableau responses 
-        this.responses.push(response);
+       this.updateOrSaveResponse(response)
         
         // j'incrémente l'index pour passer à la question suivante
         this.index++;
@@ -138,8 +243,12 @@ export default {
         <div class="w-full h-4 mb-4 bg-gray-500 rounded-full">
             <div class="h-4 bg-purple rounded-full" :style="{ width: progress + '%' }"></div>
         </div>
-        <!--la question -->
-        <!--Si la taille du tableau questions est supérieure à 0, j'affiche les différentes questions -->
+        <div v-if="this.index > 0" @click="previousQuestion" class="flex items-center relative top-3 font-semibold text-black cursor-pointer hover:text-purple transition ease-in duration-200 text-[19px]">
+            <i class="fa-solid fa-arrow-left"></i>
+            <p class="mx-3 ">Précédent</p>
+        </div>
+        <!--la div des questions -->
+        <!--Si la taille du tableau questions est supérieure à 0, j'affiche la div -->
         <div v-if="questions.length > 0" class="question flex flex-col justify-center">
             <div class="question-header">
                 <h4 class="text-purple question-indicator uppercase text-[14px] tracking-widest font-bold text-center mt-[60px] ">Question {{ index + 1 }}/{{ questions.length }}</h4>
@@ -147,39 +256,70 @@ export default {
             </div>
             <div class="question-body">
                 <!--La façon de répondre dépendra du type de la question-->
-
                 <!--Type A-->
                 <div class="body-type-A flex flex-col justify-center items-center" v-if="getCurrentQuestion().type === 'A' ">
                     <div class="option-container w-[50%]">
                         <!--Quand je clique sur l'une des divs, je récupère la valeur du bouton radio contenu dans la div cliquée-->
-                         <div v-for="(option, optionIndex) in getCurrentQuestion().option" :key="option.id" class="flex items-center space-x-4 cursor-pointer my-2 bg-gray_black rounded-[10px] hover:bg-purple transition ease-in duration-150 w-full p-2 " @click="updateSelectedOption(option.option_label)">
-                            <input type="radio" name="option" :id="'option_' + option.id" class="form-radio text-purple h-5 w-5 hidden" :value="option.option_label" v-model="selectedOption">
-                            <p class="text-white font-medium text-lg">{{optionIndex + 1}}.</p>
-                            <p :id="'option_' + option.id" class="text-white font-medium">{{ option.option_label }}</p>
+                         <div v-for="(option, optionIndex) in getCurrentQuestion().option" :key="option.id" class="flex items-center space-x-4 cursor-pointer my-2 bg-gray_black rounded-[10px] hover:bg-purple  transition ease-in duration-150 w-full p-2 " @click="updateSelectedOption(option.option_label)">
+
+                            <input type="radio" name="option" :id="'option_' + option.id" class="form-radio  text-purple h-5 w-5 hidden" :value="option.option_label" v-model="selectedOption">
+                            <p class="text-white font-medium text-lg">
+                                {{optionIndex + 1}}.
+                            </p>
+                            <p :id="'option_' + option.id" class="text-white font-medium">
+                                {{ option.option_label }}
+                            </p>
+
                         </div>
                     </div>    
                 </div>
                 <!--Type B-->
                 <div class="body-type-B" v-if="getCurrentQuestion().type === 'B'">
+
                     <!--Validation de l'email (Pour la première question uniquement-->
-                    <div v-if="getCurrentQuestion().id == 1" class="flex items-center justify-center my-[40px]">
-                         <input v-model="userEmail" type="email" id="email" name="email" placeholder="Entrez votre adresse email" class="rounded-lg p-2.5 bg-gray_black text-white text-sm block w-[35%]" required>
+                    <div v-if="getCurrentQuestion().id == 1" class="flex flex-col items-center justify-center my-[40px]">
+                         <input v-model="userEmail" type="email" id="email" name="email" placeholder="ex: adam@ifran.com" class="rounded-lg p-2.5 bg-gray-500 text-white text-sm block w-[35%]" @keyup.enter="emailValidation" required>
+                         <transition name="fade">
+                            <span v-if="emailError" class="error_email float-left font-semibold text-danger my-2">
+                                veuillez rentrer un email valide.
+                            </span>
+                         </transition>
+                            <button @click="emailValidation" class="btn bg-black text-white w-[15%] transition my-8 ease-in duration-300 hover:bg-purple rounded-full tracking-widest hover:-translate-y-[6px]">Suivant <i class="fa-solid fa-arrow-right"></i></button>
                     </div>
+
                     <!--Formulaire pour les questions de type B-->
-                    <div v-else class="flex items-center justify-center my-[40px]">
-                        <input type="text" id="response" name="response" class="border text-white text-sm rounded-lg  block w-[35%] p-2.5 bg-gray_black " v-model="type_b" placeholder="votre réponse..." required>
+                    <div v-else class="flex items-center justify-center flex-col my-[40px]">
+                        <input type="text" id="response" @keyup.enter="inputTextVerification" name="response" class="border text-white text-sm rounded-lg  block w-[35%] p-2.5 bg-gray-500" v-model="type_b" placeholder="votre réponse..." required>
+                         <transition name="fade">
+                            <span v-if="inputTextError" class="error_inputB float-left font-semibold text-danger my-2">
+                                Veuillez répondre avant de passer à la question suivante.
+                            </span>
+                         </transition> 
+                        
+                            <button @click="inputTextVerification" class="btn bg-black text-white w-[15%] transition ease-in my-8 duration-300 hover:bg-purple rounded-full tracking-widest hover:-translate-y-[6px]">Suivant <i class="fa-solid fa-arrow-right"></i></button> 
+                        
+                     
                     </div>
-                    <div class="btn-next flex items-center justify-center">
-                         <button @click="saveResponses" class="btn bg-black text-white w-[15%] transition ease-in duration-300 hover:bg-purple rounded-full tracking-widest hover:-translate-y-[6px]">Suivant <i class="fa-solid fa-arrow-right"></i></button>
-                    </div>
+    
                 </div>
+
                 <!--Type C-->
                 <div class="body-type-c" v-if="getCurrentQuestion().type === 'C'">
-                    <div class="flex items-center justify-center my-[40px]">
-                        <input type="number" id="number" v-model="type_c" class="border text-white text-sm rounded-lg  block w-[35%] p-2.5 bg-gray_black" required>
+                    <div class="flex items-center justify-center flex-col my-[40px]">
+                        <input type="number" @keyup.enter="inputNumberVerification" id="number" min="1" max="99" v-model="type_c" class="border text-white text-sm rounded-lg  block w-[35%] p-2.5 bg-gray-500" required>
+                        <transition name="fade">
+                            <span v-if="inputNumberError" id="error_inputC" class="error_inputC float-left font-semibold text-danger my-2">
+                               Rentrez un chiffre compris entre 1 et 5
+                            </span>
+                         </transition>  
+                        <transition name="fade">
+                            <span v-if="inputNumberError2" id="error_inputC" class="error_inputC float-left font-semibold text-danger my-2">
+                               Veuillez rentrer un nombre.
+                            </span>
+                         </transition>  
                     </div>
                     <div class="btn-next flex items-center justify-center">
-                         <button @click="saveResponses" class="btn bg-black text-white w-[15%] transition ease-in duration-300 hover:bg-purple rounded-full tracking-widest hover:-translate-y-[6px]">Suivant <i class="fa-solid fa-arrow-right"></i></button>
+                        <button @click="inputNumberVerification" class="btn bg-black text-white w-[15%] transition ease-in duration-300 hover:bg-purple rounded-full tracking-widest hover:-translate-y-[6px]">Suivant <i class="fa-solid fa-arrow-right"></i></button>
                     </div>
                 </div>
             </div>

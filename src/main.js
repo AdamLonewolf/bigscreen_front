@@ -5,6 +5,7 @@ import router from './router'
 import '../public/assets/styles/main.css';
 import 'animate.css';
 import 'swiper/css';
+import 'flowbite';
 
 // import the package
 import VueAwesomePaginate from "vue-awesome-paginate";
