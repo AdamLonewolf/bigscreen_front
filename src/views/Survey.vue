@@ -95,8 +95,8 @@ export default {
 
 
   <!--Modal de bienvenue-->
-  <div v-if="showModal" class="modal-container  z-10 fixed inset-0 flex items-center justify-center animate__animated animate__fadeInUp" >
-        <div class="my-modal w-[400px] h-[200px] bg-white rounded-[8px] p-3 flex flex-col justify-between">
+  <div v-if="showModal" class="modal-container z-10 fixed inset-0 flex items-center justify-center animate__animated animate__fadeInUp" >
+        <div class="my-modal xl:w-[400px] xl:h-[200px] lg:w-[400px] lg:h-[200px] md:w-[400px] md:h-[200px] sm:w-[400px] min-[320px]:w-[350px] min-[320px]:h-[220px] sm:h-[200px] bg-white rounded-[8px] p-3 flex flex-col justify-between">
           <h2 class="text-[22px] font-semibold  text-center text-purple">Bienvenue sur notre sondage !</h2>
           <p class="text-center text-[18px]">Pour commencer, veuillez cliquer sur le bouton ci-dessous</p>
           <button @click="generateToken" class="btn bg-black hover:bg-purple text-white transition ease-in duration-100">Commencer le sondage</button>    
