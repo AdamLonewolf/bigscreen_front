@@ -1,0 +1,102 @@
+/* Importer Tailwind CSS */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+
+/*Loader de la page*/
+
+
+.loader{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    background: #222425;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+
+.spinner {
+    width: 62px;
+    height: 62px;
+    display: grid;
+    border: 4px solid white;
+    border-radius: 50%;
+    border-right-color: #222425;
+    animation: spinner-a4dj62 1s infinite linear;
+   }
+   
+   .spinner::before,
+   .spinner::after {
+    content: "";
+    grid-area: 1/1;
+    margin: 2px;
+    border: inherit;
+    border-radius: 50%;
+    animation: spinner-a4dj62 2s infinite;
+   }
+   
+   .spinner::after {
+    margin: 8px;
+    animation-duration: 3s;
+   }
+
+
+   .loader-text {
+    text-align: center;
+    margin-top: 20px; /* Ou tout autre valeur de marge qui convient */
+    font-family: 'Gilroy';
+    color: white;
+    font-size: 20px;
+    animation: disappear 2s infinite;
+  }
+
+  .fondu-out{
+    opacity: 0;
+    transition: opacity 600ms ease;
+    }
+
+    .hidden {
+        z-index: -1000;
+    }
+    
+
+   @keyframes disappear{
+        0%{
+            opacity: 1;
+        }
+        50%{
+            opacity: 0;
+        }
+        100%{
+            opacity: 1;
+        }
+   }
+
+    /* Transition fade */
+    .fade-enter-active,
+    .fade-leave-active {
+    transition: opacity 0.7s;
+    }
+
+    .fade-enter,
+    .fade-leave-to {
+    opacity: 0;
+    }
+
+   @keyframes spinner-a4dj62 {
+    100% {
+     transform: rotate(1turn);
+    }
+
+
+    
+   }
