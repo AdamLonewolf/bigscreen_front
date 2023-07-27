@@ -18,6 +18,7 @@ export default {
     },
   },
   methods: {
+    
     //Fonction pour récupérer les réponses des utilisateurs
     async getUserResponses() {
       var link = `${this.url}user/responses/${this.page}`;

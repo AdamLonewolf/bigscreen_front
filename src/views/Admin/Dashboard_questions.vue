@@ -9,6 +9,9 @@ export default {
     };
   },
   methods: {
+
+    //Fonction permettant d'afficher récupérer la liste des questions à afficher sur la page.
+    
     async getQuestions() {
       var link = `${this.url}questions`;
       var res = await (

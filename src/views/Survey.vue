@@ -8,11 +8,14 @@ export default {
             showModal:false,
             showQuestion:false,
             hideLoader: false,
+            userToken: ""
         }
   },
    
   methods:{
-    //Permet d'afficher ma fenêtre modale
+
+    //Fonction permettant d'afficher ma fenêtre modale (de bienvenue)
+
      displayModal(){
         setTimeout(() => {
             this.showModal = true
@@ -27,7 +30,7 @@ export default {
             },1000)
         },
 
-     //Fonction permettant de générer le token du sondé
+     //Fonction permettant de générer le token du sondé et de le stocker dans la session du navigateur
 
      async generateToken(){
         var link = `${this.url}generate_token`;
@@ -38,8 +41,8 @@ export default {
                 },
             })).json();
             if(res.status=="Done"){
-               sessionStorage.setItem('user_token',res.token); //je stocke le token de l'utilisateur dans la session du navigateur
-    
+              this.userToken = res.token //Je stocke le token dans une variable
+              sessionStorage.setItem('user_token', res.token) //j'enregistre le token dans la session du navigateur
               const modalContainer = document.querySelector(".modal-container");//je me connecte au container du modal via le DOM
               modalContainer.classList.add("animate__animated", "animate__fadeOutDown"); //j'ajoute les classes de animate css pour créer un fade out
 
@@ -50,8 +53,6 @@ export default {
                     this.showQuestion = true
                   },500)
               }, 900); 
-
-              
           }
      }
   },
@@ -91,7 +92,7 @@ export default {
   </div>
   <!--Le composant Question-->
 
-<Question :display="showQuestion"></Question>
+<Question :display="showQuestion" :token="userToken"></Question>
 
 
   <!--Modal de bienvenue-->

@@ -43,7 +43,12 @@ export default {
     },
 
     //Données pour le chart
-    //Id_canva = id du canvas; labels = éléments à afficher dans labels ; data = données à insérer dans data;colors = couleurs à mettre dans background colors, type = type du graphique
+    // id_canva (type: string) : L'ID du canvas HTML où le graphique sera affiché.
+    // labels (type: Array) : Les étiquettes des données à afficher sur le graphique.
+    // dataNumber (type: Array) : Les données numériques à afficher sur le graphique.
+    // colors (type: Array) : Les couleurs des éléments du graphique.
+    // type (type: string) : Le type de graphique à créer.
+
 
     chartData(id_canva, labels, dataNumber, colors, type) {
       //Les éléments pour créer mon chart seront différents en fonction du type du chart

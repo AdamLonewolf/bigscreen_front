@@ -15,11 +15,11 @@ export default {
       inputTextError: false, //Montre le message d'erreur au niveau des inputs de type B
       inputNumberError2: false,
       inputNumberError: false, //Montre le message d'erreur au niveau des inputs de type c
-      token: sessionStorage.getItem("user_token"), //objet qui va stocker le token de l'utilisateur
     };
   },
   props: {
     display: Boolean,
+    token: String,
   },
   methods: {
     //Fonction qui va servir à retourner la liste des questions
@@ -133,8 +133,10 @@ export default {
     },
 
     // Fonction va mettre à jour ou ajouter une réponse en fonction de l'index de la question
+   //params: response (l'objet réponse à enregistrer)
+   
     updateOrSaveResponse(response) {
-      //On parcourt la table responses pour voir s'il y'a pas une reponse existante pour une question
+      //on parcourt la table responses pour voir s'il y'a pas une reponse existante pour une question
       const existingResponseIndex = this.responses.findIndex(
         (r) => r.question_id === response.question_id
       );
@@ -210,7 +212,7 @@ export default {
       }
     },
 
-    //Fonction pour passer à la question suivante
+  
   },
   computed: {
     //On cherche à calculer la valeur de la barre de progression (en %)
@@ -432,7 +434,7 @@ export default {
         votre investissement, nous vous préparons une application toujours plus
         facile à utiliser, seul ou en famille. Si vous désirez consulter vos
         réponses ultérieurement, vous pouvez consultez cette adresse:
-        <router-link :to="`/reponses/${this.token}`"
+        <router-link :to="`/reponses/${token}`"
           >
           <p class="text-[18px] text-purple underline cursor-pointer font-medium transition ease-in duration-200 break-words">
             vos réponses

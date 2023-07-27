@@ -1,6 +1,7 @@
 <script>
-import { Swiper, SwiperSlide } from "swiper/vue";
+import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Keyboard, Navigation } from "swiper/modules";
+
 import "swiper/css";
 import "swiper/css/navigation";
 
@@ -8,12 +9,14 @@ export default {
   data() {
     return {
       responses: [], //stockera les réponses de l'utilisateur
+       shouldShowNavigation: true,  //affichage de la navigation dans le carousel
     };
   },
   components: {
-    Swiper,
-    SwiperSlide,
-  },
+      Swiper,
+      SwiperSlide,
+    },
+
   props: ["token"],
 
   methods: {
@@ -34,6 +37,13 @@ export default {
         this.responses = res.data; //On récupère les informations de l'objet data de ma réponse json
       }
     },
+
+    onSwiper(swiper) {
+      console.log(swiper);
+    },
+    onSlideChange() {
+      console.log('slide change');
+    },
   },
 
   mounted() {
@@ -48,6 +58,7 @@ export default {
       modules: [Keyboard, Navigation],
     };
   },
+ 
 };
 </script>
 
@@ -88,16 +99,23 @@ export default {
       :keyboard="{
         enabled: true,
       }"
-      :navigation="true"
+      :navigation="shouldShowNavigation"
       :modules="modules"
       :breakpoints="{
-      '640': {
+      '320': {
+        shouldShowNavigation: false,
         slidesPerView: 1,
-        spaceBetween: 20,
+        spaceBetween: 5,
+      },
+      '640': {
+        shouldShowNavigation: false,
+        slidesPerView: 1,
+        spaceBetween: 5,
       },
       '768': {
         slidesPerView: 1,
         spaceBetween: 40,
+        shouldShowNavigation: false,
       },
     }"
       @swiper="onSwiper"
