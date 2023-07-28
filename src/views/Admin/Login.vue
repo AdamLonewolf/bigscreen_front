@@ -16,6 +16,18 @@ export default {
         async submit(){
             this.isLoading = true; //J'affiche le bouton de chargement
             var link = `${this.url}login`
+
+            //Ici, si l''email est vide ainsi que le mot de passe ou si l'email ne contient pas d'@, alors il sort de la fonction.
+
+            if (!this.email || !this.email.includes('@') || !this.password) {
+                this.showError = true;
+                setTimeout(() => {
+                    this.showError = false;
+                }, 2500);
+                return; // Arrêter ici si l'e-mail ou le mot de passe ne sont pas valides
+            }
+
+
             var res = await(await fetch(link,{
                 method:"post",
                 headers:{
@@ -48,6 +60,7 @@ export default {
                 }, 2500);
             }
         },
+    
 
 
         loader(){
@@ -110,7 +123,7 @@ export default {
         <div class="flex items-center justify-center h-screen">
             <form  class="bg-white xl:w-[400px] xl:h-[450px] lg:w-[400px] lg:h-[450px]xl:bg-green-400 sm:h-[450px] sm:w-[400px] min-[320px]:w-[350px] rounded-[20px] px-[30px] py-[15px]" @submit.prevent="submit">
                 <div class="logo">
-                <img src="public/assets/images/bigscreen_black.png" class="w-[120px] h-auto" alt="logo bigscreen">   
+                <img src="/assets/images/bigscreen_black.png" class="w-[120px] h-auto" alt="logo bigscreen">   
                 </div>
                 <div class="form-text font-bold text-[26px] min-[320px]:text-[22px] mb-6  text-purple">
                     Connexion au dashboard
@@ -153,7 +166,7 @@ export default {
         padding: 0;
         margin: 0;
         box-sizing: border-box;
-        background-image: url('public/assets/images/papyrus-dark.png');
+        background-image: url('/assets/images/papyrus-dark.png');
         background-size:40%;
         background-position: center center;
     }

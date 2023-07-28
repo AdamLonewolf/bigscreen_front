@@ -315,7 +315,7 @@ export default {
                 id="email"
                 name="email"
                 placeholder="ex: adam@ifran.com"
-                class="rounded-lg p-2.5 lg:bg-gray-500 xl:bg-gray-500 md:bg-gray-500 sm:bg-white min-[320px]:bg-white min-[320px]:w-[100%] xl:text-white lg:xl:text-white md:text-white sm:text-black text-sm block lg:w-[35%] xl:w-[35%] md:w-[55%] sm:w-[55%]"
+                class="rounded-lg p-2.5 lg:bg-transparent lg-border-2 xl-border-2 md:border-2 xl:bg-transparent md:bg-bg-transparent sm:bg-white min-[320px]:bg-white min-[320px]:w-[100%] xl:text-black lg:xl:text-black md:text-black sm:text-black text-sm block lg:w-[35%] xl:w-[35%] md:w-[55%] sm:w-[55%]"
                 @keyup.enter="emailValidation"
                 required
               />
@@ -347,7 +347,7 @@ export default {
                 id="response"
                 @keyup.enter="inputTextVerification"
                 name="response"
-                class="border text-white rounded-lg block w-[35%] p-2.5 lg:bg-gray-500 xl:bg-gray-500  md:bg-gray-500 sm:bg-white xl:text-white lg:xl:text-white md:text-white sm:text-black text-sm lg:w-[35%] xl:w-[35%] md:w-[55%] sm:w-[55%] min-[320px]:w-[100%]"
+                class="rounded-lg  placeholder:text-black p-2.5 lg:bg-transparent lg-border-2 xl-border-2 md:border-2 xl:bg-transparent md:bg-bg-transparent sm:bg-white min-[320px]:bg-white min-[320px]:w-[100%] xl:text-black lg:xl:text-black md:text-black sm:text-black text-sm block lg:w-[35%] xl:w-[35%] md:w-[55%] sm:w-[55%]"
                 v-model="type_b"
                 placeholder="votre réponse..."
                 required
@@ -378,9 +378,10 @@ export default {
                 @keyup.enter="inputNumberVerification"
                 id="number"
                 min="1"
+                placeholder="rentrez un nombre..."
                 max="99"
                 v-model="type_c"
-                class="border rounded-lg block w-[35%] p-2.5 lg:bg-gray-500 xl:bg-gray-500 md:bg-gray-500 sm:bg-white xl:text-white lg:xl:text-white md:text-white min-[320px]:bg-white sm:text-black text-sm lg:w-[35%] xl:w-[35%] md:w-[55%] sm:w-[55%] min-[320px]:w-[100%] "
+                class="rounded-lg p-2.5 placeholder:text-black lg:bg-transparent lg-border-2 xl-border-2 md:border-2 xl:bg-transparent md:bg-bg-transparent sm:bg-white min-[320px]:bg-white min-[320px]:w-[100%] xl:text-black lg:xl:text-black md:text-black sm:text-black text-sm block lg:w-[35%] xl:w-[35%] md:w-[55%] sm:w-[55%]"
                 required
               />
               <transition name="fade">

@@ -24,7 +24,7 @@ export default {
         //Si la déconnexion est effectuée avec succès, on écrase les token et l'id de l'admin dans la session du navigateur
           sessionStorage.removeItem('admin_id');
           sessionStorage.removeItem('admin_token');
-          window.location.href = ('/connexion_administration'); //Si c'est bon, on dirige l'admin sur le login
+          window.location.href = ('/administration/connexion'); //Si c'est bon, on dirige l'admin sur le login
        }  
       }
    }
@@ -40,10 +40,10 @@ export default {
    </svg>
 </button>
 
-<aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
+<aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-[500vh] transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
    <div class="h-full px-3 py-4 overflow-y-auto bg-gray_black">
       <a href="/administration" class="flex items-center pl-2.5 mb-5">
-         <img src="public/assets/images/bigscreen_logo.png" class="w-[160px] h-auto" alt="Bigscreen" />
+         <img src="/assets/images/bigscreen_logo.png" class="w-[160px] h-auto" alt="Bigscreen" />
       </a>
       <ul class="space-y-2 my-10 font-medium">
          <li>
@@ -53,13 +53,13 @@ export default {
             </a>
          </li>
           <li>
-            <a href="/administration_questions" class="flex items-center p-2 text-white group hover:bg-purple rounded-[10px] transition ease-in duration-200">
+            <a href="/administration/questions" class="flex items-center p-2 text-white group hover:bg-purple rounded-[10px] transition ease-in duration-200">
                 <i class="fa-solid fa-clipboard-question mx-2"></i>
                <span class="ml-3">Questions</span>
             </a>
          </li>
           <li>
-            <a href="/administration_reponses" class="flex items-center p-2 text-white group hover:bg-purple rounded-[10px] transition ease-in duration-200">
+            <a href="/administration/reponses" class="flex items-center p-2 text-white group hover:bg-purple rounded-[10px] transition ease-in duration-200">
                 <i class="fa-solid fa-clipboard-list mx-2"></i>
                <span class="ml-3">Réponses</span>
             </a>

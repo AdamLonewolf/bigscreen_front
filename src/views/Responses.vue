@@ -9,7 +9,7 @@ export default {
   data() {
     return {
       responses: [], //stockera les réponses de l'utilisateur
-       shouldShowNavigation: true,  //affichage de la navigation dans le carousel
+  
     };
   },
   components: {
@@ -95,22 +95,22 @@ export default {
   <div class="wrapper my-12 p-3 relative">
     <swiper
     :slidesPerView="1"
-    :spaceBetween="10"
+    :spaceBetween="30"
       :keyboard="{
         enabled: true,
       }"
-      :navigation="shouldShowNavigation"
+      :navigation="true"
       :modules="modules"
       :breakpoints="{
       '320': {
         shouldShowNavigation: false,
         slidesPerView: 1,
-        spaceBetween: 5,
+        spaceBetween: 10,
       },
       '640': {
         shouldShowNavigation: false,
         slidesPerView: 1,
-        spaceBetween: 5,
+        spaceBetween: 10,
       },
       '768': {
         slidesPerView: 1,
@@ -178,5 +178,20 @@ body {
   color: white;
   top: 35% !important;
   right: 0px;
+}
+
+@media (max-width: 768px) {
+
+.swiper-button-prev {
+ display: none;
+}
+.swiper-button-next {
+  display: none;
+}
+
+	.swiper-button-disabled{
+    display:none;   
+}
+
 }
 </style>

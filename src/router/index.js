@@ -4,6 +4,10 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      redirect: '/sondage' //je redirige automatiquement sur la page de sondage 
+    },
+    {
+      path: '/sondage',
       name: 'sondage',
       component: () => import('../views/Survey.vue') //Route pour la page des sondages
     },
@@ -14,7 +18,7 @@ const router = createRouter({
       props: true
     },
     {
-      path: '/connexion_administration',
+      path: '/administration/connexion',
       name: 'connexion',
       component: () => import('../views/Admin/Login.vue') //Route pour le login 
     },
@@ -24,12 +28,12 @@ const router = createRouter({
       component: () => import('../views/Admin/Dashboard_home.vue') //Route pour le dashboard (Accueil)
     },
     {
-      path: '/administration_questions',
+      path: '/administration/questions',
       name: 'administration.questions',
       component: () => import('../views/Admin/Dashboard_questions.vue') //Route pour le dashboard (Page Questions)
     },
     {
-      path: '/administration_reponses',
+      path: '/administration/reponses',
       name: 'administration.reponses',
       component: () => import('../views/Admin/Dashboard_responses.vue')  //Route pour le dashboard (Page Réponses)
     },

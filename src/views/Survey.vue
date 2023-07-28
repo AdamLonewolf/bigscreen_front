@@ -97,9 +97,9 @@ export default {
 
   <!--Modal de bienvenue-->
   <div v-if="showModal" class="modal-container z-10 fixed inset-0 flex items-center justify-center animate__animated animate__fadeInUp" >
-        <div class="my-modal xl:w-[400px] xl:h-[200px] lg:w-[400px] lg:h-[200px] md:w-[400px] md:h-[200px] sm:w-[400px] min-[320px]:w-[350px] min-[320px]:h-[220px] sm:h-[200px] bg-white rounded-[8px] p-3 flex flex-col justify-between">
+        <div class="my-modal xl:w-[500px] xl:h-[300px] lg:w-[500px] lg:h-[300px] md:w-[500px] md:h-[300px] sm:w-[500px] min-[320px]:w-[350px] min-[320px]:h-[350px] sm:h-[200px] bg-white rounded-[8px] p-3 flex flex-col justify-between">
           <h2 class="text-[22px] font-semibold  text-center text-purple">Bienvenue sur notre sondage !</h2>
-          <p class="text-center text-[18px]">Pour commencer, veuillez cliquer sur le bouton ci-dessous</p>
+          <p class="text-center xl:text-[18px] lg:text-[18px] md:text-[18px] sm-[18px] min-[320px]:text-[17px]">Participez à notre enquête et partagez votre expérience avec nous. Vos réponses nous aideront à adapter notre application VR pour vous offrir une immersion exceptionnelle. Cliquez ci-dessous pour démarrer.</p>
           <button @click="generateToken" class="btn bg-black hover:bg-purple text-white transition ease-in duration-100">Commencer le sondage</button>    
         </div>
   </div>

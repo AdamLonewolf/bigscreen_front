@@ -54,12 +54,13 @@ export default {
       //Les éléments pour créer mon chart seront différents en fonction du type du chart
 
       if (type === "pie") {
+        
         const ctx = document.getElementById(id_canva);
         const data = {
           labels: labels,
           datasets: [
             {
-              label: "Nombre",
+              label: "Nombre de personnes",
               data: dataNumber,
               backgroundColor: colors,
               hoverOffset: 4,
@@ -248,7 +249,7 @@ export default {
         >
           <div class="w-1/2 h-full mx-8 flex flex-col justify-center items-center">
             <div class="title">
-              <h1 class="text-[22px] my-4 font-semibold">
+              <h1 class="text-[25px] my-4 font-semibold">
                 statistiques de la <span class="text-purple">question 6</span>
               </h1>
             </div>
@@ -256,7 +257,7 @@ export default {
           </div>
           <div class="w-1/2 h-full flex mx-8  justify-center items-center flex-col">
             <div class="title">
-              <h1 class="text-[22px] my-4 font-semibold">
+              <h1 class="text-[25px] my-4 font-semibold">
                 statistiques de la<span class="text-purple"> question 7</span>
               </h1>
             </div>
@@ -269,7 +270,7 @@ export default {
         <div class="second-column-wrapper  w-[80%] justify-center items-center h-[100%] my-[10%] flex">
           <div class="w-1/2 h-full mx-8  flex justify-center items-center flex-col">
             <div class="title">
-              <h1 class="text-[22px] font-semibold my-4">
+              <h1 class="text-[25px] font-semibold my-4">
                 statistiques de la<span class="text-purple"> question 8</span>
               </h1>
             </div>
@@ -302,13 +303,13 @@ export default {
     flex-direction: column;
     align-items: center;
     margin-top: 20px;
-    width: 900px;
-    margin-right: 20px;
+    width: 700px;
+    overflow: hidden;
 
   }
 
   .title h1 {
-    font-size: 18px;
+    font-size: 22px;
   }
 }
 
@@ -319,8 +320,7 @@ export default {
     align-items: center;
     margin-top: 20px;
     width: 600px;
-    margin-right: 10px;
-
+    overflow: hidden;
   }
 
   .page-title span,.page-title-h1{
@@ -328,7 +328,7 @@ export default {
   }
 }
   .title h1 {
-    font-size: 16px;
+    font-size: 22px;
   }
 
 </style>

@@ -35,7 +35,7 @@ export default {
         this.User_responses = res.data; //je récupère les données
         var data = Object.values(this.User_responses); //Je transforme User_response en tableau d'objets
         this.responses = data; //je stocke le tableau d'objets dans l'objet responses
-        this.totalPage = this.User_responses.totalPage; //je récupère le nombre de pages au totale
+        this.totalPage = res.totalPage; //je récupère le nombre de pages au totale
       }
     },
 
